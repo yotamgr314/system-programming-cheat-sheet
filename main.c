@@ -28,8 +28,28 @@ pthread_mutex_trylock(pthread_mutex_t* mutex); // NOTE : a way for a thread to l
                                                // 01) if the mutex is unlocked at the time of calling, the mutex becomes locked and the return value is 0.
                                                // 02) if the mutex is locked at the time of calling, the function returns instantly with a failure status of EBUSY.
 
+
+// CONDITION VARIABLE :
+pthread_cond_t qcond = PTHREAD_COND_INITIALIZER; // NOTE: before condition variable can be used it must be initalized by calling the pthread_cond_init func or staticly by PTHREAD_COND_INITALIZER.
+                                                 // 01) the condition variable must be protected with mutex to avoid race condition. 
+
+// SYNCHRONISED THREADS SECTION
+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex); // NOTE: used to make a thread wait for a condition variable to be signaled.
+                                                                     // NOTE: 01) cond is a pointer to a avriable the thread will wait on.
+
+int pthread_cond_timedwait(pthread_cond_t *condVar, pthread_mutex_t *mutex, const struct timespec *abstime); // condVar is the condition we wait upon, mutex is the muted used to lock the condVar, obstime sets a limit on the time we wait.
+
+pthread_cond_signal()
+
+pthread_cond_broadcast()
+
+
+
+
+
 TERMS SECTION
 /*
 Deadlock - a situation on which a thread enters a waiting state, waiting for some resource to become available, for indefinite amount of time. 
-
+reasons that cause a deadlock: 
+01) the same thread tries to lock the same mutex twice. (the first lock will work, but the second one will cause it to wait for ever since he is the one holding the lock.)
 */
