@@ -1,5 +1,5 @@
 PTHREAD.H API SECTION
-int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg); // both creates the thread and execute its function.
 int pthread_create(thread1, NULl, functionTheThreadWillExecute, argumentsTheFuncNeeds);
 
 int pthread_exit(void *retval); // NOTE: terminates the thread. NOTE: retval is the return value of the thread.
@@ -37,9 +37,10 @@ pthread_cond_t qcond = PTHREAD_COND_INITIALIZER; // NOTE: before condition varia
 int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex); // NOTE: used to make a thread wait for a condition variable to be signaled.
                                                                      // NOTE: 01) cond is a pointer to a avriable the thread will wait on.
 
-int pthread_cond_timedwait(pthread_cond_t *condVar, pthread_mutex_t *mutex, const struct timespec *abstime); // condVar is the condition we wait upon, mutex is the muted used to lock the condVar, obstime sets a limit on the time we wait.
+int pthread_cond_timedwait(pthread_cond_t *condVar, pthread_mutex_t *mutex, const struct timespec *abstime); // NOTE: condVar is the condition we wait upon, mutex is the muted used to lock the condVar, obstime sets a limit on the time we wait.
 
-pthread_cond_signal()
+int pthread_cond_signal(pthread_cond_t *condVar); // NOTE:expects a pointer to the condVar,used to wake up one thread that is currently blocked (waiting) aka used pthread_cond_wait(&condVar, &qlock); upong himself.
+                                                  // NOTE: aka The thread that we try to wake up must have called pthread_cond_wait() or pthread_cond_timedwait() on the same condition variable.
 
 pthread_cond_broadcast()
 
